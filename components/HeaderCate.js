@@ -6,35 +6,30 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
+import CardCategory from "./CardCategory";
 
-const HeaderCate = ({ dataItems }) => {
-  const groupProductsByCategory = (products) => {
-    return products.reduce((acc, product) => {
-      if (!acc[product.category]) {
-        acc[product.category] = [];
-      }
-      acc[product.category].push(product);
-      return acc;
-    }, {});
-  };
-
-  const ProductList = () => {
-    const groupedProducts = groupProductsByCategory(products);
-  };
-  const renderItem = ({ item }) => {
-    return (
-      <View>
-        <Text style={{ color: "red", fontSize: 12 }}>{item.category}</Text>
-      </View>
-    );
-  };
-
+const gapStyle = () => {
   return (
     <View>
+      <View
+        style={{ backgroundColor: "blue", justifyContent: "space-between" }}
+      />
+    </View>
+  );
+};
+
+const HeaderCate = ({ dataItems }) => {
+  return (
+    <View style={{ marginTop: 5 }}>
       <FlatList
+        horizontal={true}
         data={dataItems}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        renderItem={CardCategory}
+        contentContainerStyle={{
+          justifyContent: "space-around", // Dàn đều các item
+          flexGrow: 1, // Đảm bảo không có khoảng trống dư thừa
+        }}
+        keyExtractor={(item, index) => index}
       />
     </View>
   );

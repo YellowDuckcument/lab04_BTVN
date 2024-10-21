@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import HeaderCate from "../components/HeaderCate";
+import Items from "../components/Items";
 
 const Categories = () => {
   const [dataItems, setDataItems] = useState([]);
@@ -9,7 +10,9 @@ const Categories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://fakestoreapi.com/products");
+        const response = await fetch(
+          "https://fakestoreapi.com/products/categories"
+        );
         const data = await response.json();
         setDataItems(data);
       } catch (error) {
@@ -25,7 +28,7 @@ const Categories = () => {
   return (
     <View>
       <HeaderCate dataItems={dataItems} />
-      <Text>Categories</Text>
+      <Items />
     </View>
   );
 };
