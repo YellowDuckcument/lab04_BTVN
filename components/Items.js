@@ -1,8 +1,9 @@
 import { View, Text, FlatList, ScrollView } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import renderProductItem from "./RenderItemCard";
 
-const Items = () => {
+const Items = ({ category }) => {
   const [categories, setCategories] = useState([]); // Danh sách category
   const [products, setProducts] = useState([]); // Danh sách sản phẩm
   const [activeCategory, setActiveCategory] = useState(null); // Danh mục đang active
@@ -23,7 +24,9 @@ const Items = () => {
   // Lấy danh sách products từ API
   const getProducts = async () => {
     try {
-      const response = await axios.get("https://fakestoreapi.com/products");
+      const response = await axios.get(
+        `https://fakestoreapi.com/products/category/${category}`
+      );
       setProducts(response.data);
     } catch (error) {
       alert(error.message);
@@ -33,7 +36,7 @@ const Items = () => {
   useEffect(() => {
     getCategories();
     getProducts();
-  }, []);
+  }, [category]);
 
   // Hàm xử lý scroll để tính toán danh mục nào đang được focus
   const handleScroll = (event) => {
@@ -54,26 +57,16 @@ const Items = () => {
 
   return (
     <View>
-      {/* Header hiển thị các nút category */}
-      {/* <HeaderCate
-        dataItems={categories}
-        activeCategory={activeCategory}
-        setActiveCategory={setActiveCategory}
-      /> */}
-
       {/* ScrollView chứa danh sách sản phẩm */}
       <ScrollView onScroll={handleScroll} scrollEventThrottle={16}>
-        {categories.map((category, index) => (
-          <View key={index} style={{ paddingVertical: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>{category}</Text>
-            <FlatList
-              data={products.filter((product) => product.category === category)}
-              renderItem={({ item }) => <ProductItem item={item} />}
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={2}
-            />
-          </View>
-        ))}
+        <View style={{ paddingVertical: 20 }}>
+          <FlatList
+            data={products}
+            renderItem={renderProductItem}
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+          />
+        </View>
       </ScrollView>
     </View>
   );

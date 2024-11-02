@@ -6,27 +6,41 @@ import Home from "./pages/Home";
 import { NavigationContainer } from "@react-navigation/native";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
+import { MyContextProvider } from "./context/MyContext";
+import Login from "./pages/Login";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MainPage from "./pages/MainPage";
+import { CartProvider } from "./context/CartContext";
 
-const Tab = createBottomTabNavigator();
-// function HostScreen() {
-//   return (
-//     <Tab.Navigator>
-//       <Tab.Screen name="Home" component={Home} />
-//       <Tab.Screen name="Categories" component={Categories} />
-//     </Tab.Navigator>
-//   );
-// }
+const Stack = createNativeStackNavigator();
 
+function CartIconWithBadge({ color, size }) {
+  const { badgeCount } = useContext(CartContext);
+  return (
+    <View>
+      <Icon name="cart-outline" size={size} color={color} />
+      {badgeCount > 0 && (
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>{badgeCount}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Categories" component={Categories} />
-        <Tab.Screen name="Cart" component={Cart} />
-        <Tab.Screen name="Profile" component={Profile} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <MyContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="MainPage"
+            component={MainPage}
+            options={{ headerShown: false }} // Tắt tiêu đề cho MainPage
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </MyContextProvider>
   );
 }
 

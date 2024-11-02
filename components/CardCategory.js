@@ -1,10 +1,15 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React from "react";
+import React, { useContext, useState } from "react";
+import MyContext from "../context/MyContext";
+import { CartContext } from "../context/CartContext";
 
 const CardCategory = ({ item, index }) => {
+  // const { category, setCategory } = useState("");
+  // const { setCategory } = useContext(CartContext);
+
   const renderItemContent = (index) => {
     switch (index) {
       case 0:
@@ -23,37 +28,41 @@ const CardCategory = ({ item, index }) => {
   };
 
   return (
-    <View
-      style={{
-        padding: 8,
-        width: 90, // Chiều rộng của item
-        height: 100, // Chiều rộng của item
-        flex: 1, // Mỗi item chiếm không gian đều nhau
-        borderWidth: 1, //
-        borderColor: "gray",
-        borderRadius: 10,
-        alignItems: "center",
-        // justifyContent: "flex-end",
-      }}>
+    <TouchableOpacity
+    // onPress={() => handleCategorySelect(item)}
+    >
       <View
         style={{
-          height: 60,
-          width: 60,
-          justifyContent: "center",
+          padding: 8,
+          width: 90, // Chiều rộng của item
+          height: 100, // Chiều rộng của item
+          flex: 1, // Mỗi item chiếm không gian đều nhau
+          borderWidth: 1, //
+          borderColor: "red",
+          borderRadius: 10,
           alignItems: "center",
+          // justifyContent: "flex-end",
         }}>
-        {renderItemContent(index)}
+        <View
+          style={{
+            height: 60,
+            width: 60,
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          {renderItemContent(index)}
+        </View>
+        <Text
+          style={{
+            fontSize: 10,
+            flexWrap: "wrap",
+            textAlign: "center",
+            textTransform: "uppercase",
+          }}>
+          {item}
+        </Text>
       </View>
-      <Text
-        style={{
-          fontSize: 10,
-          flexWrap: "wrap",
-          textAlign: "center",
-          textTransform: "uppercase",
-        }}>
-        {item}
-      </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
