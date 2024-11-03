@@ -8,8 +8,11 @@ import Cart from "./Cart";
 import Profile from "./Profile";
 import { CartContext, CartProvider } from "../context/CartContext";
 import { useContext } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ProductDetails from "../components/ProductDetails";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 function CartIconWithBadge({ color, size }) {
   const { badgeCount } = useContext(CartContext);
@@ -44,7 +47,7 @@ export default function MainPage() {
           tabBarActiveTintColor: "tomato",
           tabBarInactiveTintColor: "gray",
         })}>
-        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Home" component={HomeStack} />
         <Tab.Screen name="Categories" component={Categories} />
         <Tab.Screen name="Cart" component={Cart} />
         <Tab.Screen name="Profile" component={Profile} />
@@ -52,6 +55,21 @@ export default function MainPage() {
     </CartProvider>
   );
 }
+
+const HomeStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="HomeScreen"
+      component={Home}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="ProductDetails"
+      component={ProductDetails}
+      options={{ title: "Chi tiết sản phẩm" }}
+    />
+  </Stack.Navigator>
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -7,7 +7,7 @@ import { Image } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles/MainStyle";
 
-const renderProductItem = ({ item }) => (
+const renderProductItem = ({ item }, navigation) => (
   <View style={styles.productContainer}>
     <TouchableOpacity
       onPress={() => navigation.navigate("ProductDetails", { product: item })}>

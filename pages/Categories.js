@@ -9,7 +9,7 @@ const Categories = () => {
   // const { category, setCategory } = useContext(CartContext);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     const getCategories = async () => {
@@ -37,7 +37,7 @@ const Categories = () => {
   }
 
   const handleCategorySelect = (category) => {
-    setCategory(category); // Thay đoi category khi chọn danh mục
+    setCategory(`category/${category}`); // Thay đoi category khi chọn danh mục
   };
 
   return (

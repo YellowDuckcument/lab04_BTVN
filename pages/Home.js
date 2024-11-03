@@ -95,7 +95,7 @@ export default function Home({ navigation }) {
         </Text>
         <FlatList
           data={hotDeals}
-          renderItem={renderProductItem}
+          renderItem={(item) => renderProductItem(item, navigation)}
           numColumns={2}
           keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={styles.flatListContent}

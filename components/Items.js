@@ -25,7 +25,7 @@ const Items = ({ category }) => {
   const getProducts = async () => {
     try {
       const response = await axios.get(
-        `https://fakestoreapi.com/products/category/${category}`
+        `https://fakestoreapi.com/products/${category}`
       );
       setProducts(response.data);
     } catch (error) {
